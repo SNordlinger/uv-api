@@ -1,13 +1,25 @@
-import fastify from 'fastify';
-import { getUVForcastByZipcode } from './uvForcast';
+import fastify from "fastify";
+import fastifyCors from "fastify-cors";
+import { getUVForcastByZipcode } from "./uvForcast";
 
 const server = fastify();
+
+let origin: string;
+if (process.env.NODE_ENV === "production") {
+  origin = "https://uv.samnordlinger.com";
+} else {
+  origin = "*";
+}
+
+server.register(fastifyCors, {
+  origin,
+});
 
 interface ZipCodeParams {
   zipcode: string;
 }
 
-server.get<{ Params: ZipCodeParams }>('/zipcode/:zipcode', async (req, res) => {
+server.get<{ Params: ZipCodeParams }>("/zipcode/:zipcode", async (req, res) => {
   const zipCode = req.params.zipcode;
   const forcast = await getUVForcastByZipcode(zipCode);
   res.send(forcast);
