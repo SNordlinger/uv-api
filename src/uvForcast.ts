@@ -16,7 +16,6 @@ function timeZoneFromZip(zip: string): ZoneId | null {
     const timeZone = tzlookup(location.latitude, location.longitude);
     return ZoneId.of(timeZone);
   } catch (e) {
-    console.log(e)
     return null
   }
 }
