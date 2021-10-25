@@ -29,7 +29,7 @@ server.get<{ Params: ZipCodeParams }>("/zipcode/:zipcode", async (req, res) => {
   res.send(forcast);
 });
 
-server.get<{ Params: LatLonParams }>("/latlon/:coords", async (req, res) => {
+server.get<{ Params: LatLonParams }>("/coords/:coords", async (req, res) => {
   const coords = req.params.coords;
   const matches = coords.match(/(-?[0-9]+\.?[0-9]*),(-?[0-9]+\.?[0-9]*)/);
   if (matches === null) {
